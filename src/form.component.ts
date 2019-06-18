@@ -148,7 +148,9 @@ export class NzxFormComponent implements OnInit {
         if (control) {
           control.valueChanges.subscribe(value => {
             object[x] = value;
-            callback();
+            if (value) {
+              callback();
+            }
           });
         }
       }
