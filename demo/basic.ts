@@ -5,7 +5,7 @@ import { NzxForm } from 'nzx-form';
 
 @Component({
   selector: 'nzx-form-table-demo-basic',
-  template: '<nzx-form [state]="form.state" [(group)]="form.group" [layout]="form.layout" (onSubmit)="onSubmit($event)"></nzx-form>'
+  template: '<nzx-form [state]="form.state" (groupChange)="form.group = $event" [layout]="form.layout" (onSubmit)="onSubmit($event)"></nzx-form>'
 })
 
 export class NzxFormDemoBasicComponent implements OnInit {
@@ -18,7 +18,7 @@ export class NzxFormDemoBasicComponent implements OnInit {
     };
   }
 
-  onSubmit(values: Dictionary): void {
-    console.log(values);
+  onSubmit(value: Dictionary): void {
+    console.log(value);
   }
 }
