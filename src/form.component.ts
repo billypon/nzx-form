@@ -42,15 +42,15 @@ export class NzxFormComponent {
   @Input('layout')
   formLayout: string = 'horizontal';
 
-  @Output()
-  onSubmit = new EventEmitter<Dictionary>();
+  @Output('submit')
+  formSubmit = new EventEmitter<Dictionary>();
 
   formGroup: FormGroup = EmptyFormGroup;
   formField: FormFieldDictionary;
   groupLabel: Dictionary<string>;
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
-    this.formSubmitChange.emit(this.submitForm);
+    this.formSubmitChange.emit(this.submitForm.bind(this));
   }
 
   protected buildForm(state: FormStateDictionary): { group: Dictionary; field: FormFieldDictionary } {
@@ -98,7 +98,7 @@ export class NzxFormComponent {
 
   submitForm(): void {
     if (!this.formGroup.invalid) {
-      this.onSubmit.emit(this.formGroup.value);
+      this.formSubmit.emit(this.formGroup.value);
     }
   }
 
