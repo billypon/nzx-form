@@ -1,0 +1,73 @@
+#!/usr/bin/env node
+
+const fs = require('fs');
+const path = require('path');
+const glob = require('glob').sync;
+const pug = require('pug');
+
+process.cwd('..')
+
+require('shelljs/global');
+require('colors');
+
+echo('Start building...');
+
+echo('Start TSLint');
+if (exec('tslint -p tslint.json src/**/*.ts').code) {
+  echo('Error: TSLint failed'.red);
+  exit(1);
+}
+echo('TSLint completed'.green);
+
+exec('rm -rf tmp');
+exec('cp -a src tmp');
+exec('rm -rf dist');
+
+echo('Inline resource');
+glob('tmp/*.ts').forEach(filePath => {
+  let fileContent = fs.readFileSync(filePath, 'utf-8');
+
+  const lookupPath = path.join('tmp', path.relative('dist', path.dirname(filePath))) + '/';
+
+  fileContent = fileContent.replace(/templateUrl\s*:\s*'([^']+\.pug)'/g, (match, templatePath) => {
+    templatePath = lookupPath + templatePath;
+    let templateContent = fs.readFileSync(templatePath, 'utf-8').trim();
+    templateContent = pug.render(templateContent, { doctype: 'html' });
+    return `template: \`${templateContent}\``;
+  });
+
+  fs.writeFileSync(filePath, fileContent, 'utf-8');
+});
+echo('Inline resource completed'.green);
+
+echo('Start AoT compilation');
+if (exec('ngc -p tsconfig.json').code) {
+  echo('Error: AoT compilation failed'.red);
+  exit(2);
+}
+echo('AoT compilation completed'.green);
+
+exec('mv dist tmp');
+exec('mv tmp/dist/tmp dist');
+exec('rm -rf tmp');
+
+echo('Start bundling');
+if (exec('rollup -c --silent').code) {
+  echo('Error: Bundle failed'.red);
+  exit(3);
+}
+echo('Bundling completed'.green);
+
+echo('Start minification');
+if (exec('uglifyjs ./dist/bundles/nzx-form.umd.js -o ./dist/bundles/nzx-form.umd.min.js').code) {
+  echo('Error: Minify failed'.red);
+  exit(4);
+}
+echo('Minification completed'.green);
+
+var package = require('../package.json');
+delete package.scripts;
+delete package.devDependencies;
+require('fs').writeFileSync(__dirname + '/../dist/package.json', JSON.stringify(package, null, 2));
+
+echo('End building');

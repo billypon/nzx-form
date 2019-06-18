@@ -1,0 +1,47 @@
+{
+  "name": "nzx-form",
+  "description": "form for ng-zorro-antd",
+  "version": "0.1.0",
+  "main": "bundles/nzx-form.umd.js",
+  "module": "nzx-form.js",
+  "typings": "nzx-form.d.ts",
+  "scripts": {
+    "build": "bin/build",
+    "lint": "ng lint"
+  },
+  "dependencies": {
+    "@billypon/rxjs-types": "^0.1.0",
+    "@billypon/ts-types": "^0.1.0",
+    "ngx-pipes": "^2.5.1"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^0.11.4",
+    "@angular/animations": "^7.1.0",
+    "@angular/cli": "^7.1.0",
+    "@angular/common": "^7.1.0",
+    "@angular/compiler": "^7.1.0",
+    "@angular/compiler-cli": "^7.1.0",
+    "@angular/core": "^7.1.0",
+    "@angular/forms": "^7.1.0",
+    "@angular/platform-browser": "^7.1.0",
+    "@angular/router": "^7.1.0",
+    "codelyzer": "^4.5.0",
+    "colors": "^1.3.3",
+    "glob": "^7.1.4",
+    "ng-zorro-antd": "^7.0.0-rc.3",
+    "pug": "^2.0.3",
+    "rollup": "^1.0.2",
+    "rxjs": "^6.3.3",
+    "shelljs": "^0.8.3",
+    "tslint": "^5.12.0",
+    "typescript": "~3.2.4",
+    "uglify-es": "^3.3.9"
+  },
+  "peerDependencies": {
+    "@angular/common": "^7.1.0",
+    "@angular/core": "^7.1.0",
+    "@angular/forms": "^7.1.0",
+    "ng-zorro-antd": "^7.0.0-rc.3",
+    "rxjs": "^6.3.3"
+  }
+}
