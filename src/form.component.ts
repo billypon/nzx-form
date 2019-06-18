@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, AbstractControl, Validators } from '@angular/forms';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -20,16 +20,16 @@ import {
   selector: 'nzx-form',
   templateUrl: './form.component.pug'
 })
-export class NzxFormComponent {
+export class NzxFormComponent implements OnInit {
   @Input('state')
   set formState(value: FormStateDictionary) {
     if (value) {
       this.groupLabel = { };
       const { group, field } = this.buildForm(value);
       this.formGroup = this.fb.group(group);
+      this.formGroupChange.emit(this.formGroup);
       this.formField = field;
       this.initForm(value, field);
-      this.formGroupChange.emit(this.formGroup);
     }
   }
 
@@ -50,6 +50,9 @@ export class NzxFormComponent {
   groupLabel: Dictionary<string>;
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
+  }
+
+  ngOnInit() {
     this.formSubmitChange.emit(this.submitForm.bind(this));
   }
 
