@@ -8,4 +8,5 @@ export class NzxForm {
   group: FormGroup = EmptyFormGroup;
   submit: () => void;
   layout: string = 'horizontal';
+  class: string = '';
 }
