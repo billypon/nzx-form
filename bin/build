@@ -69,5 +69,9 @@ var package = require('../package.json');
 delete package.scripts;
 delete package.devDependencies;
 require('fs').writeFileSync(__dirname + '/../dist/package.json', JSON.stringify(package, null, 2));
+exec('cp src/form.pug dist');
+var formTpl = fs.readFileSync('src/form.pug', 'utf-8').trim();
+formTpl = pug.render(formTpl, { doctype: 'html', pretty: true });
+require('fs').writeFileSync(__dirname + '/../dist/form.html', formTpl.trim());
 
 echo('End building');
