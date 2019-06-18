@@ -161,7 +161,7 @@ export class NzxFormComponent implements OnInit {
 
   protected loadData(addition: FormStateAddition): void {
     let url: string = (addition.dataFrom as FormStateAdditionDataFrom).url || addition.dataFrom as string;
-    const { query, param, map, parse } = addition.dataFrmm as FormStateAdditionDataFrom;
+    const { query, param, map, parse } = addition.dataFrom as FormStateAdditionDataFrom;
     if (url) {
       if (param) {
         Object.keys(param).forEach(x => url = url.replace(':' + x, param[x]));
