@@ -42,7 +42,7 @@ export class NzxFormComponent implements OnInit {
   @Input('layout')
   formLayout: string = 'horizontal';
 
-  @Output('submit')
+  @Output('onSubmit')
   formSubmit = new EventEmitter<Dictionary>();
 
   formGroup: FormGroup = EmptyFormGroup;
