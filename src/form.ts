@@ -7,6 +7,7 @@ export class NzxForm {
   state: Dictionary<FormState>;
   group: FormGroup = EmptyFormGroup;
   submit: () => void;
+  value: Dictionary = { };
   layout: string = 'horizontal';
   class: string | Dictionary<boolean> = '';
   loading: boolean;
