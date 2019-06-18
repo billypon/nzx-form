@@ -1,7 +1,8 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, AbstractControl, Validators } from '@angular/forms';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, interval } from 'rxjs';
+import { throttle } from 'rxjs/operators';
 import { Dictionary } from '@billypon/ts-types';
 
 import {
@@ -146,7 +147,7 @@ export class NzxFormComponent implements OnInit {
       if (path[0] === '#') {
         const control = this.formGroup.get(path.substr(1));
         if (control) {
-          control.valueChanges.subscribe(value => {
+          control.valueChanges.pipe(throttle(() => interval(100))).subscribe(value => {
             object[x] = value;
             if (value) {
               callback();
