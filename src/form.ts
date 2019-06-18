@@ -9,4 +9,5 @@ export class NzxForm {
   submit: () => void;
   layout: string = 'horizontal';
   class: string | Dictionary<boolean> = '';
+  loading: boolean;
 }
