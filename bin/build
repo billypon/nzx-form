@@ -73,5 +73,6 @@ exec('cp src/form.pug dist');
 var formTpl = fs.readFileSync('src/form.pug', 'utf-8').trim();
 formTpl = pug.render(formTpl, { doctype: 'html', pretty: true });
 require('fs').writeFileSync(__dirname + '/../dist/form.html', formTpl.trim());
+exec('cp -a demo dist');
 
 echo('End building');
