@@ -175,7 +175,7 @@ export class NzxFormComponent implements OnInit {
       }
       const params = query ? new HttpParams({ fromObject: query }) : null;
       const observable = this.http.get(url, { params });
-      addition.data = [ ];
+      addition.data = null;
       (!parse ? observable : observable.pipe(parse)).subscribe((items: any[]) => {
         addition.data = !map ? items : items.map(item => {
           Object.keys(map).forEach(x => item[x] = item[map[x]]);

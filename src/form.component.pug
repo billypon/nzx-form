@@ -15,7 +15,7 @@ ng-template(#itemTpl let-name="name" let-group="group" let-control="control" let
     nz-form-label([nzRequired]="field.required", [ngClass]="{ 'has-error': control.invalid && control.touched }") {{ field.type != 'checkbox' ? field.label : '' }}
     nz-form-control([ngSwitch]="field.type")
       nz-form-text(*ngSwitchCase="'text'") {{ group.value[name] }}
-      nz-select([formControlName]="name", [nzPlaceHolder]="field.placeholder", (nzBlur)="updateValidity(control)",  (nzOpenChange)="!$event ? updateValidity(control) : 0", *ngSwitchCase="'select'")
+      nz-select([formControlName]="name", [nzPlaceHolder]="field.placeholder", [nzLoading]="!field.addition.data", (nzBlur)="updateValidity(control)",  (nzOpenChange)="!$event ? updateValidity(control) : 0", *ngSwitchCase="'select'")
         nz-option([nzLabel]="option.label || option.name", [nzValue]="option.value || option.id", *ngFor="let option of field.addition.data")
       ng-container(*ngSwitchCase="'number'")
         nz-input-number([formControlName]="name", (nzBlur)="updateValidity(control)", *ngIf="!field.addition.format")
