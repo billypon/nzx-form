@@ -1,5 +1,5 @@
 import { TemplateRef } from '@angular/core';
-import { FormGroup, AbstractControl, ValidatorFn } from '@angular/forms';
+import { FormGroup, AbstractControl, ValidatorFn, AsyncValidatorFn } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Dictionary } from '@billypon/ts-types';
 import { ObservablePipe } from '@billypon/rxjs-types';
@@ -12,6 +12,8 @@ export interface FormState {
   type?: string;
   subtype?: string;
   validators?: ValidatorFn[];
+  asyncValidators?: AsyncValidatorFn[];
+  updateOn?: 'change' | 'blur' | 'submit';
   addition?: FormStateAddition;
   disabled?: boolean;
   extra?: string;

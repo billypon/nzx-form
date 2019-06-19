@@ -77,13 +77,15 @@ export class NzxFormComponent implements OnInit {
         type,
         subtype,
         validators,
+        asyncValidators,
+        updateOn = 'change',
         addition,
         disabled,
         extra,
         error,
         template
       } = state[name] as FormState;
-      group[name] = [ { value, disabled }, validators ];
+      group[name] = [ { value, disabled }, { validators, asyncValidators, updateOn } ];
       field[name] = {
         label,
         placeholder: placeholder === undefined ? label : (placeholder || ''),
