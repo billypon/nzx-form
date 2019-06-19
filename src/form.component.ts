@@ -72,7 +72,7 @@ export class NzxFormComponent implements OnInit {
       const {
         label,
         value,
-        placeholder = '',
+        placeholder,
         tooltip,
         type,
         subtype,
@@ -86,7 +86,7 @@ export class NzxFormComponent implements OnInit {
       group[name] = [ { value, disabled }, validators ];
       field[name] = {
         label,
-        placeholder: placeholder !== undefined ? placeholder : label,
+        placeholder: placeholder === undefined ? label : (placeholder || ''),
         tooltip,
         type: type || 'input',
         subtype: subtype || 'text',
