@@ -127,12 +127,12 @@ export class NzxFormComponent implements OnInit {
           (this.http.get(addition.dataFrom) as Observable<FormStateDataOption[]>).subscribe(items => addition.data = items);
         } else if (addition.dataFrom instanceof Observable) {
           addition.dataFrom.subscribe(items => addition.data = items);
-        } else if ([ 'query', 'param' ].every(target => !addition.dataFrom[target])) {
+        } else if ([ 'query', 'param' ].every(name => !addition.dataFrom[name])) {
           this.loadData(addition);
         } else {
-          [ 'query', 'param' ].forEach(target => {
-            if (addition.dataFrom[target]) {
-              this.initReference(addition.dataFrom[target], () => this.loadData(addition));
+          [ 'query', 'param' ].forEach(name => {
+            if (addition.dataFrom[name]) {
+              this.initReference(addition, name);
             }
           });
         }
@@ -140,17 +140,20 @@ export class NzxFormComponent implements OnInit {
     });
   }
 
-  private initReference(object: Dictionary, callback: Function): void {
+  private initReference(addition: FormStateAddition, name: string): void {
+    const params = addition.dataFrom[name];
     let load: boolean = true;
-    Object.keys(object).forEach(x => {
-      const path = object[x];
+    Object.keys(params).forEach(x => {
+      const path = params[x];
       if (path[0] === '#') {
         const control = this.formGroup.get(path.substr(1));
         if (control) {
           control.valueChanges.pipe(throttle(() => interval(100))).subscribe(value => {
-            object[x] = value;
+            params[x] = value;
             if (value) {
-              callback();
+              this.loadData(addition);
+            } else {
+              addition.data = [ ];
             }
           });
         }
@@ -158,26 +161,26 @@ export class NzxFormComponent implements OnInit {
       load = load && path[0] !== '#';
     });
     if (load) {
-      callback();
+      this.loadData(addition);
     }
   }
 
   protected loadData(addition: FormStateAddition): void {
-    let url: string = (addition.dataFrom as FormStateAdditionDataFrom).url || addition.dataFrom as string;
-    const { query, param, map, parse } = addition.dataFrom as FormStateAdditionDataFrom;
+    const dataFrom = addition.dataFrom as FormStateAdditionDataFrom;
+    const { query, param, map, parse } = dataFrom;
+    let url: string = dataFrom.url || addition.dataFrom as string;
     if (url) {
       if (param) {
         Object.keys(param).forEach(x => url = url.replace(':' + x, param[x]));
       }
       const params = query ? new HttpParams({ fromObject: query }) : null;
       const observable = this.http.get(url, { params });
+      addition.data = [ ];
       (!parse ? observable : observable.pipe(parse)).subscribe((items: any[]) => {
-        if (map) {
-          items.forEach(item => {
-            Object.keys(map).forEach(x => item[x] = item[map[x]]);
-          });
-        }
-        addition.data = items;
+        addition.data = !map ? items : items.map(item => {
+          Object.keys(map).forEach(x => item[x] = item[map[x]]);
+          return item;
+        });
       });
     }
   }
