@@ -22,8 +22,7 @@ ng-template(#itemTpl let-name="name" let-group="group" let-control="control" let
         nz-input-number([formControlName]="name", [nzFormatter]="field.addition.format", (nzBlur)="updateValidity(control)", *ngIf="field.addition.format")
       label(nz-checkbox, [formControlName]="name", *ngSwitchCase="'checkbox'") {{ field.label }}
       ng-container(*ngSwitchCase="'datetime'")
-        ng-container([ngSwitch]="subtype")
-          nz-range-picker([formControlName]="name", [nzFormat]="field.addition.format", [nzShowTime]="subtype.includes('time')", *ngSwitchCase="'date-range' || 'datetime-range'")
+        nz-range-picker([formControlName]="name", [nzFormat]="field.addition.format", [nzShowTime]="field.subtype.includes('time')", *ngIf="[ 'date-range', 'datetime-range' ].includes(field.subtype)")
       ng-container(*ngSwitchDefault)
         textarea(nz-input, [formControlName]="name", [placeholder]="field.placeholder", (blur)="updateValidity(control)", *ngIf="field.addition.multiline")
         ng-container(*ngIf="!field.addition.multiline")
