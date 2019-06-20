@@ -1,8 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, AbstractControl, Validators } from '@angular/forms';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, interval } from 'rxjs';
-import { throttle } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { Dictionary } from '@billypon/ts-types';
 
 import {
@@ -150,7 +149,7 @@ export class NzxFormComponent implements OnInit {
       if (path[0] === '#') {
         const control = this.formGroup.get(path.substr(1));
         if (control) {
-          control.valueChanges.pipe(throttle(() => interval(100))).subscribe(value => {
+          control.valueChanges.subscribe(value => {
             params[x] = value;
             if (value) {
               this.loadData(addition);
@@ -189,7 +188,7 @@ export class NzxFormComponent implements OnInit {
 
   updateValidity(control: AbstractControl): void {
     if (this.formGroup.updateOn === 'change') {
-      control.updateValueAndValidity({ onlySelf: true });
+      control.updateValueAndValidity({ onlySelf: true, emitEvent: false });
     }
   }
 }
