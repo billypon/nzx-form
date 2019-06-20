@@ -187,8 +187,6 @@ export class NzxFormComponent implements OnInit {
   }
 
   updateValidity(control: AbstractControl): void {
-    if (this.formGroup.updateOn === 'change') {
-      control.updateValueAndValidity({ onlySelf: true, emitEvent: false });
-    }
+    control.setErrors(control.errors);
   }
 }
