@@ -7,7 +7,7 @@ export class NzxForm {
   state: Dictionary<FormState>;
   submit: () => void;
   value: Dictionary = { };
-  groupChange: () => void;
+  groupChange: (group: FormGroup) => void;
   layout: string = 'horizontal';
   class: string | Dictionary<boolean> = '';
   loading: boolean;
@@ -19,7 +19,7 @@ export class NzxForm {
   set group(value: FormGroup) {
     this._group = value;
     if (this.groupChange) {
-      this.groupChange();
+      this.groupChange(value);
     }
   }
 }
