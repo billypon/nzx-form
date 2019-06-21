@@ -84,9 +84,6 @@ export class NzxFormComponent implements OnInit {
         error,
         template
       } = state[name] as FormState;
-      if (type === 'datetime') {
-        addition.format = addition.format || 'yyyy/MM/dd';
-      }
       group[name] = [ { value, disabled }, { validators, asyncValidators, updateOn } ];
       field[name] = {
         label,
