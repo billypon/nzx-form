@@ -11,7 +11,7 @@ ng-template(#formTpl let-group="group" let-field="field")
       ng-container(*ngTemplateOutlet="formTpl; context: { group: group.controls[name], field: field[name] }")
 
 ng-template(#itemTpl let-name="name" let-group="group" let-control="control" let-field="field")
-  nz-form-item([formGroup]="group", *ngIf="!field.template")
+  nz-form-item([formGroup]="group", *ngIf="!field.template && field.type != 'hidden'")
     nz-form-label([nzRequired]="field.required", [ngClass]="{ 'has-error': control.invalid && (control.touched || control.dirty) }") {{ field.type != 'checkbox' ? field.label : '' }}
     nz-form-control([ngSwitch]="field.type")
       nz-form-text(*ngSwitchCase="'text'") {{ group.value[name] }}
