@@ -125,7 +125,7 @@ export class NzxFormComponent implements OnInit {
       const { addition = { } } = state[x] as FormState;
       if (addition.dataFrom) {
         if (typeof addition.dataFrom === 'string') {
-          (this.http.get(addition.dataFrom) as Observable<FormStateDataOption[]>).subscribe(items => addition.data = items);
+          this.http.get(addition.dataFrom).subscribe((items: FormStateDataOption[]) => addition.data = items);
         } else if (addition.dataFrom instanceof Observable) {
           addition.dataFrom.subscribe(items => addition.data = items);
         } else if ([ 'query', 'param' ].every(name => !addition.dataFrom[name])) {
@@ -168,7 +168,7 @@ export class NzxFormComponent implements OnInit {
 
   protected loadData(addition: FormStateAddition): void {
     const dataFrom = addition.dataFrom as FormStateAdditionDataFrom;
-    const { query, param, map, parse } = dataFrom;
+    const { query, param, observe, parse } = dataFrom;
     let url: string = dataFrom.url || addition.dataFrom as string;
     if (url) {
       if (param) {
@@ -177,12 +177,11 @@ export class NzxFormComponent implements OnInit {
       const params = query ? new HttpParams({ fromObject: query }) : null;
       const observable = this.http.get(url, { params });
       addition.data = null;
-      (!parse ? observable : observable.pipe(parse)).subscribe((items: any[]) => {
-        addition.data = !map ? items : items.map(item => {
-          Object.keys(map).forEach(x => item[x] = item[map[x]]);
-          return item;
-        });
-      });
+      if (observe) {
+        observe(observable).subscribe(items => addition.data = items);
+      } else {
+        observable.subscribe((result: any) => addition.data = parse ? parse(result) : result as FormStateDataOption[]);
+      }
     }
   }
 

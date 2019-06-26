@@ -26,12 +26,12 @@ export interface FormStateAddition extends Dictionary {
   dataFrom?: string | Observable<FormStateDataOption[]> | FormStateAdditionDataFrom
 }
 
-export interface FormStateAdditionDataFrom {
+export interface FormStateAdditionDataFrom<T = any> {
   url: string;
   query?: Dictionary<string>;
   param?: Dictionary<string>;
-  map?: Dictionary<string>;
-  parse?: ObservablePipe<any[]>;
+  observe?: (observable: Observable<any>) => Observable<T[]>;
+  parse?: (result?: any) => T[];
 }
 
 export interface FormStateDataOption<T = any> {
