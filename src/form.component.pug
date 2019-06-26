@@ -34,4 +34,4 @@ ng-template(#itemTpl let-name="name" let-group="group" let-control="control" let
       nz-form-extra(*ngIf="!field.controlError || !field.errors[field.controlError]") {{ field.extra }}
       nz-form-explain(*ngIf="field.controlError && field.errors[field.controlError]") {{ field.errors[field.controlError] }}
   ng-container(*ngIf="field.template")
-    ng-container(*ngTemplateOutlet="field.template; context: { name: name, group: group, field: field }")
+    ng-container(*ngTemplateOutlet="field.template; context: { $implicit: group, name: name, control: control, field: field, addition: addition, blur: updateValidity.bind(this, control) }")
