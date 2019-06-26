@@ -155,7 +155,7 @@
     "one-variable-per-declaration": true,
     "ordered-imports": false,
     "prefer-function-over-method": false,
-    "prefer-method-signature": true,
+    "prefer-method-signature": false,
     "prefer-switch": true,
     "prefer-template": false,
     "prefer-while": true,
