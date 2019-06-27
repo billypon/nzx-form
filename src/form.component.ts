@@ -190,17 +190,17 @@ export class NzxFormComponent implements OnInit {
     control.setErrors(control.errors);
   }
 
-  getSizeClass({ size }: FormStateAddition): Dictionary<boolean> {
+  getSizeClass(addition: FormStateAddition): Dictionary<boolean> {
     const dict: Dictionary<boolean> = { };
+    const size = addition.size || this.controlSize;
     switch (size) {
       case 'small':
         dict.small = true;
         break;
-      case 'default':
-        dict.default = true;
+      case 'large':
+        dict.large = true;
         break;
       default:
-        dict.large = true;
         break;
     }
     return dict;
