@@ -189,4 +189,20 @@ export class NzxFormComponent implements OnInit {
   updateValidity(control: AbstractControl): void {
     control.setErrors(control.errors);
   }
+
+  getSizeClass({ size }: FormStateAddition): Dictionary<boolean> {
+    const dict: Dictionary<boolean> = { };
+    switch (size) {
+      case 'small':
+        dict.small = true;
+        break;
+      case 'default':
+        dict.default = true;
+        break;
+      default:
+        dict.large = true;
+        break;
+    }
+    return dict;
+  }
 }

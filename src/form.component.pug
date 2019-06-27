@@ -15,14 +15,14 @@ ng-template(#itemTpl let-name="name" let-group="group" let-control="control" let
     nz-form-label([nzRequired]="field.required", [ngClass]="{ 'has-error': control.invalid && (control.touched || control.dirty) }") {{ field.type != 'checkbox' ? field.label : '' }}
     nz-form-control([ngSwitch]="field.type")
       ng-container(*ngSwitchCase="'text'")
-        nz-form-text(*ngIf="control.value") {{ control.value }}
-        .nz-form-text-placeholder(*ngIf="!control.value") {{ field.placeholder }}
+        nz-form-text([ngClass]="getSizeClass(addition)", *ngIf="control.value") {{ control.value }}
+        .nz-form-text-placeholder([ngClass]="getSizeClass(addition)", *ngIf="!control.value") {{ field.placeholder }}
       nz-select([formControlName]="name", [nzPlaceHolder]="field.placeholder", [nzAllowClear]="addition.allowClear", (nzBlur)="updateValidity(control)",  (nzOpenChange)="!$event ? updateValidity(control) : 0", [nzSize]="addition.size || controlSize", *ngSwitchCase="'select'")
         nz-option([nzLabel]="option.label || option.name", [nzValue]="option.value || option.id", *ngFor="let option of addition.data")
       ng-container(*ngSwitchCase="'number'")
         nz-input-number([formControlName]="name", (nzBlur)="updateValidity(control)", [nzSize]="addition.size || controlSize", *ngIf="!addition.format")
         nz-input-number([formControlName]="name", [nzFormatter]="addition.format", (nzBlur)="updateValidity(control)", [nzSize]="addition.size || controlSize", *ngIf="addition.format")
-      label(nz-checkbox, [formControlName]="name", *ngSwitchCase="'checkbox'") {{ field.label }}
+      label(nz-checkbox, [formControlName]="name", [ngClass]="getSizeClass(addition)", *ngSwitchCase="'checkbox'") {{ field.label }}
       ng-container(*ngSwitchCase="'datetime'")
         nz-range-picker([formControlName]="name", [nzFormat]="addition.format", [nzShowTime]="field.subtype.includes('time')", [nzSize]="addition.size || controlSize", *ngIf="[ 'date-range', 'datetime-range' ].includes(field.subtype)")
       ng-container(*ngSwitchDefault)
