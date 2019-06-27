@@ -15,21 +15,21 @@ ng-template(#itemTpl let-name="name" let-group="group" let-control="control" let
     nz-form-label([nzRequired]="field.required", [ngClass]="{ 'has-error': control.invalid && (control.touched || control.dirty) }") {{ field.type != 'checkbox' ? field.label : '' }}
     nz-form-control([ngSwitch]="field.type")
       nz-form-text(*ngSwitchCase="'text'") {{ group.value[name] }}
-      nz-select([formControlName]="name", [nzPlaceHolder]="field.placeholder", [nzAllowClear]="addition.allowClear", (nzBlur)="updateValidity(control)",  (nzOpenChange)="!$event ? updateValidity(control) : 0", *ngSwitchCase="'select'")
+      nz-select([formControlName]="name", [nzPlaceHolder]="field.placeholder", [nzAllowClear]="addition.allowClear", (nzBlur)="updateValidity(control)",  (nzOpenChange)="!$event ? updateValidity(control) : 0", [nzSize]="addition.size", *ngSwitchCase="'select'")
         nz-option([nzLabel]="option.label || option.name", [nzValue]="option.value || option.id", *ngFor="let option of addition.data")
       ng-container(*ngSwitchCase="'number'")
-        nz-input-number([formControlName]="name", (nzBlur)="updateValidity(control)", *ngIf="!addition.format")
-        nz-input-number([formControlName]="name", [nzFormatter]="addition.format", (nzBlur)="updateValidity(control)", *ngIf="addition.format")
+        nz-input-number([formControlName]="name", (nzBlur)="updateValidity(control)", [nzSize]="addition.size", *ngIf="!addition.format")
+        nz-input-number([formControlName]="name", [nzFormatter]="addition.format", (nzBlur)="updateValidity(control)", [nzSize]="addition.size", *ngIf="addition.format")
       label(nz-checkbox, [formControlName]="name", *ngSwitchCase="'checkbox'") {{ field.label }}
       ng-container(*ngSwitchCase="'datetime'")
-        nz-range-picker([formControlName]="name", [nzFormat]="addition.format", [nzShowTime]="field.subtype.includes('time')", *ngIf="[ 'date-range', 'datetime-range' ].includes(field.subtype)")
+        nz-range-picker([formControlName]="name", [nzFormat]="addition.format", [nzShowTime]="field.subtype.includes('time')", [nzSize]="addition.size", *ngIf="[ 'date-range', 'datetime-range' ].includes(field.subtype)")
       ng-container(*ngSwitchDefault)
         textarea(nz-input, [formControlName]="name", [placeholder]="field.placeholder", (blur)="updateValidity(control)", *ngIf="addition.multiline")
         ng-container(*ngIf="!addition.multiline")
           ng-container(*ngIf="!addition.suffix")
-            input(nz-input, [formControlName]="name", [placeholder]="field.placeholder", [type]="field.subtype", (blur)="updateValidity(control)", *ngIf="!addition.tooltip")
-            input(nz-input, [formControlName]="name", [placeholder]="field.placeholder", [type]="field.subtype", (blur)="updateValidity(control)" nz-tooltip, [nzTitle]="addition.tooltip.title || addition.tooltip", [nzTrigger]="addition.tooltip.trigger || 'focus'" nzPlacement="right", *ngIf="addition.tooltip")
-          nz-input-group([nzAddOnAfter]="addition.suffix", *ngIf="addition.suffix")
+            input(nz-input, [formControlName]="name", [placeholder]="field.placeholder", [type]="field.subtype", (blur)="updateValidity(control)", [nzSize]="addition.size", *ngIf="!addition.tooltip")
+            input(nz-input, [formControlName]="name", [placeholder]="field.placeholder", [type]="field.subtype", (blur)="updateValidity(control)" nz-tooltip, [nzTitle]="addition.tooltip.title || addition.tooltip", [nzTrigger]="addition.tooltip.trigger || 'focus'" nzPlacement="right", [nzSize]="addition.size", *ngIf="addition.tooltip")
+          nz-input-group([nzAddOnAfter]="addition.suffix", [nzSize]="addition.size", *ngIf="addition.suffix")
             input(nz-input, [formControlName]="name", [placeholder]="field.placeholder", [type]="field.subtype", (blur)="updateValidity(control)")
       nz-form-extra(*ngIf="field.helpText && (!field.controlError || !field.errorText[field.controlError])") {{ field.helpText }}
       nz-form-explain(*ngIf="field.controlError && field.errorText[field.controlError]") {{ field.errorText[field.controlError] }}
