@@ -187,10 +187,7 @@
       true,
       "LF"
     ],
-    "max-line-length": [
-      true,
-      140
-    ],
+    "max-line-length": false,
     "newline-before-return": false,
     "new-parens": false,
     "no-consecutive-blank-lines": [
