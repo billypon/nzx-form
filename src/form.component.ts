@@ -72,7 +72,6 @@ export class NzxFormComponent implements OnInit {
         label,
         value,
         placeholder,
-        tooltip,
         type,
         subtype,
         validators,
@@ -88,7 +87,6 @@ export class NzxFormComponent implements OnInit {
       field[name] = {
         label,
         placeholder: placeholder === undefined ? label : (placeholder || ''),
-        tooltip,
         type: type || 'input',
         subtype: subtype || 'text',
         required: ((validators || [ ]) as any).includes(Validators.required),

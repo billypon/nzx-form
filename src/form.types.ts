@@ -8,7 +8,6 @@ export interface FormState {
   label: string;
   value?: any;
   placeholder?: string;
-  tooltip?: string;
   type?: string;
   subtype?: string;
   validators?: ValidatorFn[];
@@ -49,7 +48,6 @@ export type FormStateDictionary = Dictionary<FormState> | Dictionary<FormGroupSt
 export interface FormField {
   label: string;
   placeholder: string;
-  tooltip: string;
   type: string;
   subtype: string;
   addition: FormStateAddition;
