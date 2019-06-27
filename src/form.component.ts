@@ -79,8 +79,8 @@ export class NzxFormComponent implements OnInit {
         updateOn = 'change',
         addition = { },
         disabled,
-        extra,
-        error,
+        helpText,
+        errorText,
         template
       } = state[name] as FormState;
       group[name] = [ { value, disabled }, { validators, asyncValidators, updateOn } ];
@@ -91,8 +91,8 @@ export class NzxFormComponent implements OnInit {
         subtype: subtype || 'text',
         required: ((validators || [ ]) as any).includes(Validators.required),
         addition,
-        extra,
-        error: error || { },
+        helpText,
+        errorText: errorText || { },
         template,
       } as FormField;
     });

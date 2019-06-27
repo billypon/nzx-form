@@ -31,7 +31,7 @@ ng-template(#itemTpl let-name="name" let-group="group" let-control="control" let
             input(nz-input, [formControlName]="name", [placeholder]="field.placeholder", [type]="field.subtype", (blur)="updateValidity(control)" nz-tooltip, [nzTitle]="addition.tooltip.title || addition.tooltip", [nzTrigger]="addition.tooltip.trigger || 'focus'" nzPlacement="right", *ngIf="addition.tooltip")
           nz-input-group([nzAddOnAfter]="addition.suffix", *ngIf="addition.suffix")
             input(nz-input, [formControlName]="name", [placeholder]="field.placeholder", [type]="field.subtype", (blur)="updateValidity(control)")
-      nz-form-extra(*ngIf="!field.controlError || !field.errors[field.controlError]") {{ field.extra }}
-      nz-form-explain(*ngIf="field.controlError && field.errors[field.controlError]") {{ field.errors[field.controlError] }}
+      nz-form-extra(*ngIf="field.helpText && (!field.controlError || !field.errorText[field.controlError])") {{ field.helpText }}
+      nz-form-explain(*ngIf="field.controlError && field.errorText[field.controlError]") {{ field.errorText[field.controlError] }}
   ng-container(*ngIf="field.template")
     ng-container(*ngTemplateOutlet="field.template; context: { $implicit: group, name: name, control: control, field: field, addition: addition, blur: updateValidity.bind(this, control) }")

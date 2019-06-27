@@ -15,8 +15,8 @@ export interface FormState {
   updateOn?: 'change' | 'blur' | 'submit';
   addition?: FormStateAddition;
   disabled?: boolean;
-  extra?: string;
-  error?: Dictionary<string>;
+  helpText?: string;
+  errorText?: Dictionary<string>;
   template?: TemplateRef<void>;
 }
 
@@ -52,8 +52,8 @@ export interface FormField {
   subtype: string;
   addition: FormStateAddition;
   required: boolean;
-  extra: string;
-  error: Dictionary<string>;
+  helpText: string;
+  errorText: Dictionary<string>;
   template: TemplateRef<void>;
   control: AbstractControl;
   errors?: string[];
