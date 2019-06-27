@@ -45,6 +45,9 @@ export class NzxFormComponent implements OnInit {
   @Output('onSubmit')
   formSubmit = new EventEmitter<Dictionary>();
 
+  @Input('size')
+  controlSize: 'small' | 'default' | 'large' = 'large';
+
   formGroup: FormGroup = EmptyFormGroup;
   formField: FormFieldDictionary;
   groupLabel: Dictionary<string>;
