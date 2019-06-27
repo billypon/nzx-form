@@ -123,7 +123,7 @@ export class NzxFormComponent implements OnInit {
         }
       });
       field[x].control = control;
-      const { addition = { } } = state[x] as FormState;
+      const { addition = { } as FormStateAddition } = state[x] as FormState;
       if (addition.dataFrom) {
         if (typeof addition.dataFrom === 'string') {
           this.http.get(addition.dataFrom).subscribe((items: FormStateDataOption[]) => addition.data = items);
