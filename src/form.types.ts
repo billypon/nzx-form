@@ -21,8 +21,18 @@ export interface FormState {
 }
 
 export interface FormStateAddition extends Dictionary {
+  allowClear?: boolean;
   data?: FormStateDataOption[];
   dataFrom?: string | Observable<FormStateDataOption[]> | FormStateAdditionDataFrom
+  format?: string;
+  multiline: boolean;
+  size?: 'small' | 'default' | 'large';
+  suffix?: string;
+  tooltip?: string | {
+    title: string;
+    trigger?: 'hover' | 'focus' | 'click';
+    placement?: 'top' | 'left' | 'right' | 'bottom' | 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' | 'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom';
+  };
 }
 
 export interface FormStateAdditionDataFrom<T = any> {
