@@ -25,10 +25,10 @@ export interface FormStateAddition extends Dictionary {
   data?: FormStateDataOption[];
   dataFrom?: string | Observable<FormStateDataOption[]> | FormStateAdditionDataFrom
   format?: string;
-  multiline: boolean;
+  multiline?: boolean;
   size?: 'small' | 'default' | 'large';
   suffix?: string;
-  tooltip?: string | {
+  tooltip?: string | TemplateRef<void> | {
     title: string;
     trigger?: 'hover' | 'focus' | 'click';
     placement?: 'top' | 'left' | 'right' | 'bottom' | 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' | 'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom';
