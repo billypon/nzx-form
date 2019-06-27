@@ -16,7 +16,7 @@ ng-template(#itemTpl let-name="name" let-group="group" let-control="control" let
     nz-form-control([ngSwitch]="field.type")
       ng-container(*ngSwitchCase="'text'")
         nz-form-text([ngClass]="getSizeClass(addition)", *ngIf="control.value") {{ control.value }}
-        .nz-form-text-placeholder([ngClass]="getSizeClass(addition)", *ngIf="!control.value") {{ field.placeholder }}
+        .ant-form-text-placeholder([ngClass]="getSizeClass(addition)", *ngIf="!control.value") {{ field.placeholder }}
       nz-select([formControlName]="name", [nzPlaceHolder]="field.placeholder", [nzAllowClear]="addition.allowClear", (nzOpenChange)="!$event ? updateValidity(control) : 0", [nzSize]="addition.size || controlSize", *ngSwitchCase="'select'")
         nz-option([nzLabel]="option.label || option.name", [nzValue]="option.value || option.id", *ngFor="let option of addition.data")
       ng-container(*ngSwitchCase="'number'")
