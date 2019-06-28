@@ -10,7 +10,6 @@ export class NzxForm {
   groupChange: (group: FormGroup) => void;
   layout: string = 'horizontal';
   class: string | Dictionary<boolean> = '';
-  loading: boolean;
 
   private _group: FormGroup = EmptyFormGroup;
   get group(): FormGroup {
@@ -20,6 +19,17 @@ export class NzxForm {
     this._group = value;
     if (this.groupChange) {
       this.groupChange(value);
+    }
+  }
+
+  private _loading: boolean;
+  get loading(): boolean {
+    return this._loading;
+  }
+  set loading(value: boolean) {
+    this._loading = value;
+    if (this._group) {
+      this._group[value ? 'disable' : 'enable']();
     }
   }
 }
