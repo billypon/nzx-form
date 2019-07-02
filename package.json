@@ -1,7 +1,7 @@
 {
   "name": "nzx-form",
   "description": "form for ng-zorro-antd",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "main": "bundles/nzx-form.umd.js",
   "module": "nzx-form.js",
   "typings": "nzx-form.d.ts",
