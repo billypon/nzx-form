@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, AbstractControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, AbstractControl, Validators } from '@angular/forms';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Dictionary } from '@billypon/ts-types';
@@ -16,7 +16,7 @@ import {
   EmptyFormGroup
 } from './form.types';
 
-export function hasError(control: FormControl): boolean {
+export function hasError(control: AbstractControl): boolean {
   return control.invalid && (control.touched || control.dirty);
 }
 
