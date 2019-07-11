@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, AbstractControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, AbstractControl, Validators } from '@angular/forms';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Dictionary } from '@billypon/ts-types';
@@ -15,6 +15,10 @@ import {
   FormFieldDictionary,
   EmptyFormGroup
 } from './form.types';
+
+export function hasError(control: FormControl): boolean {
+  return control.invalid && (control.touched || control.dirty);
+}
 
 @Component({
   selector: 'nzx-form',
@@ -47,6 +51,8 @@ export class NzxFormComponent implements OnInit {
 
   @Input('size')
   controlSize: 'small' | 'default' | 'large' = 'large';
+
+  readonly hasError = hasError;
 
   formGroup: FormGroup = EmptyFormGroup;
   formField: FormFieldDictionary;
