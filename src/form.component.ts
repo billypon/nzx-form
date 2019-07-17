@@ -193,8 +193,11 @@ export class NzxFormComponent implements OnInit {
     }
   }
 
-  updateValidity(control: AbstractControl): void {
+  updateValidity(control: AbstractControl, field?: FormField): void {
     control.setErrors(control.errors);
+    if (control.errors && field) {
+      field.errors = Object.keys(control.errors);
+    }
   }
 
   getSizeClass(addition: FormStateAddition): Dictionary<boolean> {
