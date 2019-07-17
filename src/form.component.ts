@@ -109,7 +109,8 @@ export class NzxFormComponent implements OnInit {
   }
 
   submitForm(): void {
-    if (!this.formGroup.invalid) {
+    this.formGroup.updateValueAndValidity();
+    if (this.formGroup.valid) {
       this.formSubmit.emit(this.formGroup.value);
     }
   }
