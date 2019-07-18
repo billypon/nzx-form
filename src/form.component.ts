@@ -109,7 +109,7 @@ export class NzxFormComponent implements OnInit {
   }
 
   submitForm(): void {
-    this.formGroup.updateValueAndValidity();
+    Object.keys(this.formGroup.controls).forEach(x => this.formGroup.controls[x].markAsTouched());
     if (this.formGroup.valid) {
       this.formSubmit.emit(this.formGroup.value);
     }
