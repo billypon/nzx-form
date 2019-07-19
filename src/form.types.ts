@@ -44,6 +44,9 @@ export interface FormStateAddition {
 }
 
 export interface InputAddition extends FormStateAddition {
+  addonBefore?: string | TemplateRef<void>;
+  addonAfter?: string | TemplateRef<void>;
+  prefix?: string | TemplateRef<void>;
   suffix?: string | TemplateRef<void>;
   multiline?: boolean;
   tooltip?: string | TemplateRef<void> | {
