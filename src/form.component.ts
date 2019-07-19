@@ -6,15 +6,15 @@ import { Dictionary } from '@billypon/ts-types';
 
 import {
   FormState,
+  FormStateGroup,
   FormStateDictionary,
-  FormStateAddition,
-  FormGroupState,
   FormField,
   FormFieldDictionary,
-  EmptyFormGroup,
+  FormStateAddition,
   SelectAddition,
   SelectDataFrom,
   SelectDataOption,
+  EmptyFormGroup,
 } from './form.types';
 
 export function hasError(control: AbstractControl): boolean {
@@ -70,7 +70,7 @@ export class NzxFormComponent implements OnInit {
     const group: Dictionary = { };
     const field: FormFieldDictionary = { };
     Object.keys(state).forEach(name => {
-      const groupState = state[name] as FormGroupState;
+      const groupState = state[name] as FormStateGroup;
       if (groupState.state) {
         this.groupLabel[name] = groupState.label;
         const x = this.buildForm(groupState.state);
@@ -127,7 +127,7 @@ export class NzxFormComponent implements OnInit {
       const path = prefix + x;
       const control = this.formGroup.get(path);
       if (control instanceof FormGroup) {
-        this.initForm((states[x] as FormGroupState).state, fields[x] as Dictionary<FormField>, `${ path }`);
+        this.initForm((states[x] as FormStateGroup).state, fields[x] as Dictionary<FormField>, `${ path }`);
         return;
       }
       control.valueChanges.subscribe(() => {

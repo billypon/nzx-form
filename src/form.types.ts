@@ -2,7 +2,6 @@ import { TemplateRef } from '@angular/core';
 import { FormGroup, AbstractControl, ValidatorFn, AsyncValidatorFn } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Dictionary } from '@billypon/ts-types';
-import { ObservablePipe } from '@billypon/rxjs-types';
 
 export interface FormState {
   label: string;
@@ -20,7 +19,12 @@ export interface FormState {
   template?: TemplateRef<void>;
 }
 
-export type FormStateDictionary = Dictionary<FormState> | Dictionary<FormGroupState>;
+export interface FormStateGroup {
+  label?: string;
+  state: Dictionary<FormState>;
+}
+
+export type FormStateDictionary = Dictionary<FormState> | Dictionary<FormStateGroup>;
 
 export interface FormField {
   label: string;
@@ -77,11 +81,6 @@ export interface SelectDataFrom<T = any> {
   param?: Dictionary<string>;
   observe?: (observable: Observable<any>) => Observable<T[]>;
   parse?: (result?: any) => T[];
-}
-
-export interface FormGroupState {
-  label?: string;
-  state: Dictionary<FormState>;
 }
 
 export const EmptyFormGroup = new FormGroup({ });

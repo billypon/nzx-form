@@ -10,7 +10,6 @@
     "lint": "ng lint"
   },
   "dependencies": {
-    "@billypon/rxjs-types": "^0.1.0",
     "@billypon/ts-types": "^0.1.0",
     "ngx-pipes": "^2.5.1"
   },
