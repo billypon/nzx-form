@@ -20,39 +20,6 @@ export interface FormState {
   template?: TemplateRef<void>;
 }
 
-export interface FormStateAddition extends Dictionary {
-  allowClear?: boolean;
-  data?: FormStateDataOption[];
-  dataFrom?: string | Observable<FormStateDataOption[]> | FormStateAdditionDataFrom
-  format?: string;
-  multiline?: boolean;
-  size?: 'small' | 'default' | 'large';
-  suffix?: string;
-  tooltip?: string | TemplateRef<void> | {
-    title: string;
-    trigger?: 'hover' | 'focus' | 'click';
-    placement?: 'top' | 'left' | 'right' | 'bottom' | 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' | 'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom';
-  };
-}
-
-export interface FormStateAdditionDataFrom<T = any> {
-  url: string;
-  query?: Dictionary<string>;
-  param?: Dictionary<string>;
-  observe?: (observable: Observable<any>) => Observable<T[]>;
-  parse?: (result?: any) => T[];
-}
-
-export interface FormStateDataOption<T = any> {
-  label: string;
-  value: T;
-}
-
-export interface FormGroupState {
-  label?: string;
-  state: Dictionary<FormState>;
-}
-
 export type FormStateDictionary = Dictionary<FormState> | Dictionary<FormGroupState>;
 
 export interface FormField {
@@ -70,6 +37,48 @@ export interface FormField {
 }
 
 export interface FormFieldDictionary extends Dictionary<FormField | Dictionary<FormField>> {
+}
+
+export interface FormStateAddition {
+  size?: 'small' | 'default' | 'large';
+}
+
+export interface InputAddition extends FormStateAddition {
+  suffix?: string | TemplateRef<void>;
+  multiline?: boolean;
+  tooltip?: string | TemplateRef<void> | {
+    title: string;
+    trigger?: 'hover' | 'focus' | 'click';
+    placement?: 'top' | 'left' | 'right' | 'bottom' | 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' | 'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom';
+  };
+}
+
+export interface InputNumberAddition extends FormStateAddition {
+  format?: string;
+}
+
+export interface SelectAddition extends FormStateAddition {
+  data?: SelectDataOption[];
+  dataFrom?: string | Observable<SelectDataOption[]> | SelectDataFrom;
+  allowClear?: boolean;
+}
+
+export interface SelectDataOption<T = any> {
+  label: string;
+  value: T;
+}
+
+export interface SelectDataFrom<T = any> {
+  url: string;
+  query?: Dictionary<string>;
+  param?: Dictionary<string>;
+  observe?: (observable: Observable<any>) => Observable<T[]>;
+  parse?: (result?: any) => T[];
+}
+
+export interface FormGroupState {
+  label?: string;
+  state: Dictionary<FormState>;
 }
 
 export const EmptyFormGroup = new FormGroup({ });

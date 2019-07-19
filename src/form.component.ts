@@ -6,14 +6,15 @@ import { Dictionary } from '@billypon/ts-types';
 
 import {
   FormState,
-  FormGroupState,
-  FormStateAddition,
-  FormStateAdditionDataFrom,
-  FormStateDataOption,
   FormStateDictionary,
+  FormStateAddition,
+  FormGroupState,
   FormField,
   FormFieldDictionary,
-  EmptyFormGroup
+  EmptyFormGroup,
+  SelectAddition,
+  SelectDataFrom,
+  SelectDataOption,
 } from './form.types';
 
 export function hasError(control: AbstractControl): boolean {
@@ -119,23 +120,25 @@ export class NzxFormComponent implements OnInit {
     }
   }
 
-  protected initForm(state: FormStateDictionary, field: FormFieldDictionary, prefix = ''): void {
-    Object.keys(state).forEach(x => {
+  protected initForm(states: FormStateDictionary, fields: FormFieldDictionary, prefix = ''): void {
+    Object.keys(states).forEach(x => {
+      const state = states[x] as FormState;
+      const field = fields[x] as FormField;
       const path = prefix + x;
       const control = this.formGroup.get(path);
       if (control instanceof FormGroup) {
-        this.initForm((state[x] as FormGroupState).state, field[x] as Dictionary<FormField>, `${ path }`);
+        this.initForm((states[x] as FormGroupState).state, fields[x] as Dictionary<FormField>, `${ path }`);
         return;
       }
       control.valueChanges.subscribe(() => {
-        field[x].errors = null;
-        this.updateValidity(control, field[x] as FormField);
+        field.errors = null;
+        this.updateValidity(control, field);
       });
-      field[x].control = control;
-      const { addition = { } as FormStateAddition } = state[x] as FormState;
+      field.control = control;
+      const addition: SelectAddition = state.addition || { };
       if (addition.dataFrom) {
         if (typeof addition.dataFrom === 'string') {
-          this.http.get(addition.dataFrom).subscribe((items: FormStateDataOption[]) => addition.data = items);
+          this.http.get(addition.dataFrom).subscribe((items: SelectDataOption[]) => addition.data = items);
         } else if (addition.dataFrom instanceof Observable) {
           addition.dataFrom.subscribe(items => addition.data = items);
         } else if ([ 'query', 'param' ].every(name => !addition.dataFrom[name])) {
@@ -143,7 +146,7 @@ export class NzxFormComponent implements OnInit {
         } else {
           [ 'query', 'param' ].forEach(name => {
             if (addition.dataFrom[name]) {
-              this.initReference(addition, name);
+              this.initSelect(addition, name);
             }
           });
         }
@@ -151,7 +154,7 @@ export class NzxFormComponent implements OnInit {
     });
   }
 
-  private initReference(addition: FormStateAddition, name: string): void {
+  private initSelect(addition: SelectAddition, name: string): void {
     const params = addition.dataFrom[name];
     let load: boolean = true;
     Object.keys(params).forEach(x => {
@@ -176,8 +179,8 @@ export class NzxFormComponent implements OnInit {
     }
   }
 
-  protected loadData(addition: FormStateAddition): void {
-    const dataFrom = addition.dataFrom as FormStateAdditionDataFrom;
+  protected loadData(addition: SelectAddition): void {
+    const dataFrom = addition.dataFrom as SelectDataFrom;
     const { query, param, observe, parse } = dataFrom;
     let url: string = dataFrom.url || addition.dataFrom as string;
     if (url) {
@@ -190,7 +193,7 @@ export class NzxFormComponent implements OnInit {
       if (observe) {
         observe(observable).subscribe(items => addition.data = items);
       } else {
-        observable.subscribe((result: any) => addition.data = parse ? parse(result) : result as FormStateDataOption[]);
+        observable.subscribe((result: any) => addition.data = parse ? parse(result) : result as SelectDataOption[]);
       }
     }
   }
