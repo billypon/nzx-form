@@ -53,11 +53,6 @@ export interface InputAddition extends FormStateAddition {
   prefix?: string | TemplateRef<void>;
   suffix?: string | TemplateRef<void>;
   multiline?: boolean;
-  tooltip?: string | TemplateRef<void> | {
-    title: string;
-    trigger?: 'hover' | 'focus' | 'click';
-    placement?: 'top' | 'left' | 'right' | 'bottom' | 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' | 'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom';
-  };
 }
 
 export interface InputNumberAddition extends FormStateAddition {
