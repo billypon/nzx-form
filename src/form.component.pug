@@ -32,8 +32,10 @@ ng-template(#itemTpl let-name="name" let-group="group" let-control="control" let
         ng-container(*ngSwitchCase="'datetime'")
           nz-range-picker([formControlName]="name", [nzFormat]="addition.format", [nzShowTime]="field.subtype.includes('time')", [nzSize]="addition.size || controlSize", *ngIf="[ 'date-range', 'datetime-range' ].includes(field.subtype)")
         ng-container(*ngSwitchDefault)
-          nz-input-group([nzAddOnBefore]="addition.addonBefore", [nzAddOnAfter]="addition.addonAfter", [nzPrefix]="addition.prefix", [nzSuffix]="addition.suffix", [nzSize]="addition.size || controlSize", *ngIf="!addition.multiline")
-            input(nz-input, [formControlName]="name", [placeholder]="field.placeholder", [type]="field.subtype", (blur)="updateValidity(control, field)")
+          ng-container(*ngIf="!addition.multiline")
+            input(nz-input, [formControlName]="name", [placeholder]="field.placeholder", [type]="field.subtype", (blur)="updateValidity(control, field)", [nzSize]="addition.size || controlSize", *ngIf="!(addition.addonBefore || addition.addonAfter || addition.prefix || addition.suffix)")
+            nz-input-group([nzAddOnBefore]="addition.addonBefore", [nzAddOnAfter]="addition.addonAfter", [nzPrefix]="addition.prefix", [nzSuffix]="addition.suffix", [nzSize]="addition.size || controlSize", *ngIf="addition.addonBefore || addition.addonAfter || addition.prefix || addition.suffix")
+              input(nz-input, [formControlName]="name", [placeholder]="field.placeholder", [type]="field.subtype", (blur)="updateValidity(control, field)")
           textarea(nz-input, [formControlName]="name", [placeholder]="field.placeholder", (blur)="updateValidity(control, field)", *ngIf="addition.multiline")
         nz-form-extra(*ngIf="field.helpText && (!field.errors || !field.errorText[field.errors[0]])") {{ field.helpText }}
         nz-form-explain(*ngIf="field.errors && field.errorText[field.errors[0]]") {{ field.errorText[field.errors[0]] }}
