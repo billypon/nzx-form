@@ -13,28 +13,31 @@ ng-template(#formTpl let-group="group" let-field="field")
 ng-template(#itemTpl let-name="name" let-group="group" let-control="control" let-field="field" let-addition="addition")
   nz-form-item([formGroup]="group", [ngClass]="{ 'has-error': hasError(control) }", *ngIf="!field.template && field.type != 'hidden'")
     nz-form-label([nzRequired]="field.required") {{ field.type != 'checkbox' ? field.label : '' }}
-    nz-form-control([ngSwitch]="field.type")
-      ng-container(*ngSwitchCase="'text'")
-        nz-form-text([ngClass]="getSizeClass(addition)", *ngIf="control.value") {{ control.value }}
-        .ant-form-text-placeholder([ngClass]="getSizeClass(addition)", *ngIf="!control.value") {{ field.placeholder }}
-      nz-select([formControlName]="name", [nzPlaceHolder]="field.placeholder", [nzAllowClear]="addition.allowClear", (nzOpenChange)="!$event ? updateValidity(control, field) : 0", [nzSize]="addition.size || controlSize", *ngSwitchCase="'select'")
-        nz-option([nzLabel]="option.label || option.name", [nzValue]="option.value || option.id", *ngFor="let option of addition.data")
-      ng-container(*ngSwitchCase="'number'")
-        nz-input-number([formControlName]="name", (nzBlur)="updateValidity(control, field)", [nzSize]="addition.size || controlSize", *ngIf="!addition.format")
-        nz-input-number([formControlName]="name", (nzBlur)="updateValidity(control, field)", [nzSize]="addition.size || controlSize", [nzFormatter]="addition.format", *ngIf="addition.format")
-      label(nz-checkbox, [formControlName]="name", [ngClass]="getSizeClass(addition)", *ngSwitchCase="'checkbox'") {{ field.label }}
-      ng-container(*ngSwitchCase="'radio'")
-        nz-radio-group([formControlName]="name")
-          ng-container(*ngFor="let option of addition.data")
-            label(nz-radio-button, [nzValue]="option.value || option.id", *ngIf="field.subtype == 'button'") {{ option.label || option.name }}
-            label(nz-radio, [nzValue]="option.value || option.id", *ngIf="field.subtype != 'button'") {{ option.label || option.name }}
-      ng-container(*ngSwitchCase="'datetime'")
-        nz-range-picker([formControlName]="name", [nzFormat]="addition.format", [nzShowTime]="field.subtype.includes('time')", [nzSize]="addition.size || controlSize", *ngIf="[ 'date-range', 'datetime-range' ].includes(field.subtype)")
-      ng-container(*ngSwitchDefault)
-        nz-input-group([nzAddOnBefore]="addition.addonBefore", [nzAddOnAfter]="addition.addonAfter", [nzPrefix]="addition.prefix", [nzSuffix]="addition.suffix", [nzSize]="addition.size || controlSize", *ngIf="!addition.multiline")
-          input(nz-input, [formControlName]="name", [placeholder]="field.placeholder", [type]="field.subtype", (blur)="updateValidity(control, field)")
-        textarea(nz-input, [formControlName]="name", [placeholder]="field.placeholder", (blur)="updateValidity(control, field)", *ngIf="addition.multiline")
-      nz-form-extra(*ngIf="field.helpText && (!field.errors || !field.errorText[field.errors[0]])") {{ field.helpText }}
-      nz-form-explain(*ngIf="field.errors && field.errorText[field.errors[0]]") {{ field.errorText[field.errors[0]] }}
+    nz-form-control
+      ng-container([ngSwitch]="field.type", *ngIf="!field.controlTpl")
+        ng-container(*ngSwitchCase="'text'")
+          nz-form-text([ngClass]="getSizeClass(addition)", *ngIf="control.value") {{ control.value }}
+          .ant-form-text-placeholder([ngClass]="getSizeClass(addition)", *ngIf="!control.value") {{ field.placeholder }}
+        nz-select([formControlName]="name", [nzPlaceHolder]="field.placeholder", [nzAllowClear]="addition.allowClear", (nzOpenChange)="!$event ? updateValidity(control, field) : 0", [nzSize]="addition.size || controlSize", *ngSwitchCase="'select'")
+          nz-option([nzLabel]="option.label || option.name", [nzValue]="option.value || option.id", *ngFor="let option of addition.data")
+        ng-container(*ngSwitchCase="'number'")
+          nz-input-number([formControlName]="name", (nzBlur)="updateValidity(control, field)", [nzSize]="addition.size || controlSize", *ngIf="!addition.format")
+          nz-input-number([formControlName]="name", (nzBlur)="updateValidity(control, field)", [nzSize]="addition.size || controlSize", [nzFormatter]="addition.format", *ngIf="addition.format")
+        label(nz-checkbox, [formControlName]="name", [ngClass]="getSizeClass(addition)", *ngSwitchCase="'checkbox'") {{ field.label }}
+        ng-container(*ngSwitchCase="'radio'")
+          nz-radio-group([formControlName]="name")
+            ng-container(*ngFor="let option of addition.data")
+              label(nz-radio-button, [nzValue]="option.value || option.id", *ngIf="field.subtype == 'button'") {{ option.label || option.name }}
+              label(nz-radio, [nzValue]="option.value || option.id", *ngIf="field.subtype != 'button'") {{ option.label || option.name }}
+        ng-container(*ngSwitchCase="'datetime'")
+          nz-range-picker([formControlName]="name", [nzFormat]="addition.format", [nzShowTime]="field.subtype.includes('time')", [nzSize]="addition.size || controlSize", *ngIf="[ 'date-range', 'datetime-range' ].includes(field.subtype)")
+        ng-container(*ngSwitchDefault)
+          nz-input-group([nzAddOnBefore]="addition.addonBefore", [nzAddOnAfter]="addition.addonAfter", [nzPrefix]="addition.prefix", [nzSuffix]="addition.suffix", [nzSize]="addition.size || controlSize", *ngIf="!addition.multiline")
+            input(nz-input, [formControlName]="name", [placeholder]="field.placeholder", [type]="field.subtype", (blur)="updateValidity(control, field)")
+          textarea(nz-input, [formControlName]="name", [placeholder]="field.placeholder", (blur)="updateValidity(control, field)", *ngIf="addition.multiline")
+        nz-form-extra(*ngIf="field.helpText && (!field.errors || !field.errorText[field.errors[0]])") {{ field.helpText }}
+        nz-form-explain(*ngIf="field.errors && field.errorText[field.errors[0]]") {{ field.errorText[field.errors[0]] }}
+      ng-container(*ngIf="field.controlTpl")
+        ng-container(*ngTemplateOutlet="field.controlTpl; context: { $implicit: group, name: name, control: control, field: field, addition: addition, blur: updateValidity.bind(this, control, field) }")
   ng-container(*ngIf="field.template")
     ng-container(*ngTemplateOutlet="field.template; context: { $implicit: group, name: name, control: control, field: field, addition: addition, blur: updateValidity.bind(this, control, field) }")

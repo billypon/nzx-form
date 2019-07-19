@@ -91,7 +91,8 @@ export class NzxFormComponent implements OnInit {
         disabled,
         helpText,
         errorText,
-        template
+        template,
+        controlTpl,
       } = state[name] as FormState;
       group[name] = [ { value, disabled }, { validators, asyncValidators, updateOn } ];
       field[name] = {
@@ -104,6 +105,7 @@ export class NzxFormComponent implements OnInit {
         helpText,
         errorText: errorText || { },
         template,
+        controlTpl,
       } as FormField;
     });
     return { group, field };
