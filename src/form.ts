@@ -1,10 +1,11 @@
 import { FormGroup } from '@angular/forms';
 import { Dictionary } from '@billypon/ts-types';
 
-import { FormState, EmptyFormGroup } from './form.types';
+import { FormState, FormStateGroup, EmptyFormGroup } from './form.types';
 
 export class NzxForm {
   state: Dictionary<FormState>;
+  stateGroup: Dictionary<FormStateGroup>;
   submit: () => void;
   value: Dictionary = { };
   groupChange: (group: FormGroup) => void;
