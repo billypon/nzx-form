@@ -50,6 +50,7 @@ export interface FormStateAddition {
 }
 
 export interface InputAddition extends FormStateAddition {
+  maxlength?: number;
   addonBefore?: string | TemplateRef<void>;
   addonAfter?: string | TemplateRef<void>;
   prefix?: string | TemplateRef<void>;
