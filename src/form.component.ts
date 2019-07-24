@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, AbstractControl, Validators } from '@angular/forms';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { InputBoolean } from 'ng-zorro-antd';
 import { Observable } from 'rxjs';
 import { Dictionary } from '@billypon/ts-types';
 
@@ -44,11 +45,14 @@ export class NzxFormComponent implements OnInit {
   @Output('submitChange')
   formSubmitChange = new EventEmitter<() => void>();
 
-  @Input('layout')
-  formLayout: string = 'horizontal';
-
   @Output('onSubmit')
   formSubmit = new EventEmitter<Dictionary>();
+
+  @Input('loading') @InputBoolean()
+  formLoading: boolean;
+
+  @Input('layout')
+  formLayout: string = 'horizontal';
 
   @Input('size')
   controlSize: 'small' | 'default' | 'large' = 'large';
@@ -112,10 +116,13 @@ export class NzxFormComponent implements OnInit {
   }
 
   submitForm(): void {
+    if (this.formLoading) {
+      return;
+    }
     Object.keys(this.formGroup.controls).forEach(x => {
       const control = this.formGroup.controls[x];
-      control.markAsTouched();
       this.updateValidity(control, this.formField[x] as FormField);
+      control.markAsTouched();
     });
     if (this.formGroup.valid) {
       this.formSubmit.emit(this.formGroup.value);
