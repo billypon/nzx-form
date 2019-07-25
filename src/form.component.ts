@@ -136,7 +136,7 @@ export class NzxFormComponent implements OnInit {
       const path = prefix + x;
       const control = this.formGroup.get(path);
       if (control instanceof FormGroup) {
-        this.initForm((states[x] as FormStateGroup).state, fields[x] as Dictionary<FormField>, `${ path }`);
+        this.initForm((states[x] as FormStateGroup).state, fields[x] as Dictionary<FormField>, path + '.');
         return;
       }
       control.valueChanges.subscribe(() => {
