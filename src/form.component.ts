@@ -229,4 +229,8 @@ export class NzxFormComponent implements OnInit {
     }
     return dict;
   }
+
+  isShowLabel(field: FormField): boolean {
+    return field.type !== 'select' || field.subtype !== '';
+  }
 }
