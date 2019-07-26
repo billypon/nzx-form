@@ -119,11 +119,7 @@ export class NzxFormComponent implements OnInit {
     if (this.formLoading) {
       return;
     }
-    Object.keys(this.formGroup.controls).forEach(x => {
-      const control = this.formGroup.controls[x];
-      this.updateValidity(control, this.formField[x] as FormField);
-      control.markAsTouched();
-    });
+    this.updateGroupValidity(this.formGroup, this.formField);
     if (this.formGroup.valid) {
       this.formSubmit.emit(this.formGroup.value);
     }
@@ -141,7 +137,7 @@ export class NzxFormComponent implements OnInit {
       }
       control.valueChanges.subscribe(() => {
         field.errors = null;
-        this.updateValidity(control, field);
+        this.updateControlValidity(control, field);
       });
       field.control = control;
       const addition: SelectAddition = state.addition || { };
@@ -207,7 +203,19 @@ export class NzxFormComponent implements OnInit {
     }
   }
 
-  updateValidity(control: AbstractControl, field: FormField): void {
+  private updateGroupValidity(group: FormGroup, fields: FormFieldDictionary): void {
+    Object.keys(group.controls).forEach(x => {
+      const control = group.controls[x];
+      if (control instanceof FormGroup) {
+        this.updateGroupValidity(control, fields[x] as Dictionary<FormField>);
+      } else {
+        this.updateControlValidity(control, fields[x] as FormField);
+        control.markAsTouched();
+      }
+    });
+  }
+
+  updateControlValidity(control: AbstractControl, field: FormField): void {
     control.setErrors(control.errors);
     if (control.errors) {
       field.errors = Object.keys(control.errors);

@@ -18,11 +18,11 @@ ng-template(#itemTpl let-name="name" let-group="group" let-control="control" let
         ng-container(*ngSwitchCase="'text'")
           nz-form-text([ngClass]="getSizeClass(addition)", *ngIf="control.value") {{ control.value }}
           .ant-form-text-placeholder([ngClass]="getSizeClass(addition)", *ngIf="!control.value") {{ field.placeholder }}
-        nz-select([formControlName]="name", [nzPlaceHolder]="field.placeholder", [nzAllowClear]="addition.allowClear", (nzOpenChange)="!$event ? updateValidity(control, field) : 0", [nzSize]="addition.size || controlSize", *ngSwitchCase="'select'")
+        nz-select([formControlName]="name", [nzPlaceHolder]="field.placeholder", [nzAllowClear]="addition.allowClear", (nzOpenChange)="!$event ? updateControlValidity(control, field) : 0", [nzSize]="addition.size || controlSize", *ngSwitchCase="'select'")
           nz-option([nzLabel]="option.label || option.name", [nzValue]="option.value || option.id", *ngFor="let option of addition.data")
         ng-container(*ngSwitchCase="'number'")
-          nz-input-number([formControlName]="name", (nzBlur)="updateValidity(control, field)", [nzSize]="addition.size || controlSize", *ngIf="!addition.format")
-          nz-input-number([formControlName]="name", (nzBlur)="updateValidity(control, field)", [nzSize]="addition.size || controlSize", [nzFormatter]="addition.format", *ngIf="addition.format")
+          nz-input-number([formControlName]="name", (nzBlur)="updateControlValidity(control, field)", [nzSize]="addition.size || controlSize", *ngIf="!addition.format")
+          nz-input-number([formControlName]="name", (nzBlur)="updateControlValidity(control, field)", [nzSize]="addition.size || controlSize", [nzFormatter]="addition.format", *ngIf="addition.format")
         ng-container(*ngSwitchCase="'checkbox'")
           label(nz-checkbox, [formControlName]="name", [ngClass]="getSizeClass(addition)", *ngIf="field.subtype != 'group'") {{ field.label }}
           nz-checkbox-group([formControlName]="name", [ngClass]="getSizeClass(addition)", *ngIf="field.subtype == 'group'")
@@ -35,13 +35,13 @@ ng-template(#itemTpl let-name="name" let-group="group" let-control="control" let
           nz-range-picker([formControlName]="name", [nzFormat]="addition.format", [nzShowTime]="field.subtype.includes('time')", [nzSize]="addition.size || controlSize", *ngIf="[ 'date-range', 'datetime-range' ].includes(field.subtype)")
         ng-container(*ngSwitchDefault)
           ng-container(*ngIf="!addition.multiline")
-            input(nz-input, [formControlName]="name", [placeholder]="field.placeholder", [maxlength]="field.addition.maxlength", (blur)="updateValidity(control, field)", [type]="field.subtype", [nzSize]="addition.size || controlSize", *ngIf="!(addition.addonBefore || addition.addonAfter || addition.prefix || addition.suffix)")
+            input(nz-input, [formControlName]="name", [placeholder]="field.placeholder", [maxlength]="field.addition.maxlength", (blur)="updateControlValidity(control, field)", [type]="field.subtype", [nzSize]="addition.size || controlSize", *ngIf="!(addition.addonBefore || addition.addonAfter || addition.prefix || addition.suffix)")
             nz-input-group([nzAddOnBefore]="addition.addonBefore", [nzAddOnAfter]="addition.addonAfter", [nzPrefix]="addition.prefix", [nzSuffix]="addition.suffix", [nzSize]="addition.size || controlSize", *ngIf="addition.addonBefore || addition.addonAfter || addition.prefix || addition.suffix")
-              input(nz-input, [formControlName]="name", [placeholder]="field.placeholder", [maxlength]="field.addition.maxlength", (blur)="updateValidity(control, field)", [type]="field.subtype")
-          textarea(nz-input, [formControlName]="name", [placeholder]="field.placeholder", [maxlength]="field.addition.maxlength", (blur)="updateValidity(control, field)", *ngIf="addition.multiline")
+              input(nz-input, [formControlName]="name", [placeholder]="field.placeholder", [maxlength]="field.addition.maxlength", (blur)="updateControlValidity(control, field)", [type]="field.subtype")
+          textarea(nz-input, [formControlName]="name", [placeholder]="field.placeholder", [maxlength]="field.addition.maxlength", (blur)="updateControlValidity(control, field)", *ngIf="addition.multiline")
       ng-container(*ngIf="field.controlTpl")
-        ng-container(*ngTemplateOutlet="field.controlTpl; context: { $implicit: group, name: name, control: control, field: field, addition: addition, validate: updateValidity.bind(this, control, field) }")
+        ng-container(*ngTemplateOutlet="field.controlTpl; context: { $implicit: group, name: name, control: control, field: field, addition: addition, validate: updateControlValidity.bind(this, control, field) }")
       nz-form-extra(*ngIf="field.helpText && (!field.errors || !field.errorText[field.errors[0]])") {{ field.helpText }}
       nz-form-explain(*ngIf="field.errors && field.errorText[field.errors[0]]") {{ field.errorText[field.errors[0]] }}
   ng-container(*ngIf="field.template")
-    ng-container(*ngTemplateOutlet="field.template; context: { $implicit: group, name: name, control: control, field: field, addition: addition, validate: updateValidity.bind(this, control, field) }")
+    ng-container(*ngTemplateOutlet="field.template; context: { $implicit: group, name: name, control: control, field: field, addition: addition, validate: updateControlValidity.bind(this, control, field) }")
