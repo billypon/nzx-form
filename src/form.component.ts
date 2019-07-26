@@ -210,7 +210,6 @@ export class NzxFormComponent implements OnInit {
         this.updateGroupValidity(control, fields[x] as Dictionary<FormField>);
       } else {
         this.updateControlValidity(control, fields[x] as FormField);
-        control.markAsTouched();
       }
     });
   }
@@ -220,6 +219,7 @@ export class NzxFormComponent implements OnInit {
     if (control.errors) {
       field.errors = Object.keys(control.errors);
     }
+    control.markAsTouched();
   }
 
   getSizeClass(addition: FormStateAddition): Dictionary<boolean> {
