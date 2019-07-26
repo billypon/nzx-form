@@ -98,9 +98,12 @@ export class NzxFormComponent implements OnInit {
         template,
         controlTpl,
       } = state[name] as FormState;
+      addition.label = addition.label !== undefined ? addition.label : true;
+      addition.class = addition.class || { };
+      Object.keys(addition.class).forEach(x => addition.class[x] = addition.class[x] || '');
       group[name] = [ { value, disabled }, { validators, asyncValidators, updateOn } ];
       field[name] = {
-        label,
+        label: type === 'checkbox' && subtype !== 'group' ? '' : label,
         placeholder: placeholder === undefined ? label : (placeholder || ''),
         type: type || 'input',
         subtype: subtype || 'text',
@@ -236,9 +239,5 @@ export class NzxFormComponent implements OnInit {
         break;
     }
     return dict;
-  }
-
-  isShowLabel(field: FormField): boolean {
-    return field.type !== 'select' || field.subtype !== '';
   }
 }

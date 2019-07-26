@@ -11,9 +11,9 @@ ng-template(#formTpl let-group="group" let-field="field")
       ng-container(*ngTemplateOutlet="formTpl; context: { group: group.controls[name], field: field[name] }")
 
 ng-template(#itemTpl let-name="name" let-group="group" let-control="control" let-field="field" let-addition="addition")
-  nz-form-item([formGroup]="group", [ngClass]="{ 'has-error': hasError(control) }", *ngIf="!field.template && field.type != 'hidden'")
-    nz-form-label([nzRequired]="field.required") {{ isShowLabel(field) ? field.label : '' }}
-    nz-form-control
+  nz-form-item([formGroup]="group", [ngClass]="field.addition.class.item + (hasError(control) ? ' has-error' : '')", *ngIf="!field.template && field.type != 'hidden'")
+    nz-form-label([nzRequired]="field.required", [ngClass]="field.addition.class.label", *ngIf="field.addition.label") {{ field.label }}
+    nz-form-control([ngClass]="field.addition.class.control")
       ng-container([ngSwitch]="field.type", *ngIf="!field.controlTpl")
         ng-container(*ngSwitchCase="'text'")
           nz-form-text([ngClass]="getSizeClass(addition)", *ngIf="control.value") {{ control.value }}
@@ -24,7 +24,7 @@ ng-template(#itemTpl let-name="name" let-group="group" let-control="control" let
           nz-input-number([formControlName]="name", (nzBlur)="updateControlValidity(control, field)", [nzSize]="addition.size || controlSize", *ngIf="!addition.format")
           nz-input-number([formControlName]="name", (nzBlur)="updateControlValidity(control, field)", [nzSize]="addition.size || controlSize", [nzFormatter]="addition.format", *ngIf="addition.format")
         ng-container(*ngSwitchCase="'checkbox'")
-          label(nz-checkbox, [formControlName]="name", [ngClass]="getSizeClass(addition)", *ngIf="field.subtype != 'group'") {{ field.label }}
+          label(nz-checkbox, [formControlName]="name", [ngClass]="getSizeClass(addition)", *ngIf="field.subtype != 'group'") {{ field.placeholder }}
           nz-checkbox-group([formControlName]="name", [ngClass]="getSizeClass(addition)", *ngIf="field.subtype == 'group'")
         ng-container(*ngSwitchCase="'radio'")
           nz-radio-group([formControlName]="name")

@@ -47,6 +47,12 @@ export interface FormFieldDictionary extends Dictionary<FormField | Dictionary<F
 
 export interface FormStateAddition {
   size?: 'small' | 'default' | 'large';
+  label?: boolean;
+  class?: {
+    item?: string;
+    label?: string;
+    control?: string;
+  }
 }
 
 export interface InputAddition extends FormStateAddition {
