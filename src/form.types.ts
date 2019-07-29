@@ -18,6 +18,7 @@ export interface FormState {
   errorText?: Dictionary<string>;
   template?: TemplateRef<void>;
   controlTpl?: TemplateRef<void>;
+  fullControlTpl?: TemplateRef<void>;
 }
 
 export interface FormStateGroup {

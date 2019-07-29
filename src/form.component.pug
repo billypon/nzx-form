@@ -14,7 +14,7 @@ ng-template(#itemTpl let-name="name" let-group="group" let-control="control" let
   nz-form-item([formGroup]="group", [ngClass]="field.addition.class.item + (hasError(control) ? ' has-error' : '')", *ngIf="!field.template && field.type != 'hidden'")
     nz-form-label([nzRequired]="field.required", [ngClass]="field.addition.class.label", *ngIf="field.addition.label") {{ field.label }}
     nz-form-control([ngClass]="field.addition.class.control")
-      ng-container([ngSwitch]="field.type", *ngIf="!field.controlTpl")
+      ng-container([ngSwitch]="field.type", *ngIf="!field.controlTpl && !field.fullControlTpl")
         ng-container(*ngSwitchCase="'text'")
           nz-form-text([ngClass]="getSizeClass(addition)", *ngIf="control.value") {{ control.value }}
           .ant-form-text-placeholder([ngClass]="getSizeClass(addition)", *ngIf="!control.value") {{ field.placeholder }}
@@ -41,7 +41,9 @@ ng-template(#itemTpl let-name="name" let-group="group" let-control="control" let
           textarea(nz-input, [formControlName]="name", [placeholder]="field.placeholder", [maxlength]="field.addition.maxlength", (blur)="updateControlValidity(control, field)", *ngIf="addition.multiline")
       ng-container(*ngIf="field.controlTpl")
         ng-container(*ngTemplateOutlet="field.controlTpl; context: { $implicit: group, name: name, control: control, field: field, addition: addition, validate: updateControlValidity.bind(this, control, field) }")
-      nz-form-extra(*ngIf="field.helpText && (!field.errors || !field.errorText[field.errors[0]])") {{ field.helpText }}
-      nz-form-explain(*ngIf="field.errors && field.errorText[field.errors[0]]") {{ field.errorText[field.errors[0]] }}
+        nz-form-extra(*ngIf="field.helpText && (!field.errors || !field.errorText[field.errors[0]])") {{ field.helpText }}
+        nz-form-explain(*ngIf="field.errors && field.errorText[field.errors[0]]") {{ field.errorText[field.errors[0]] }}
+      ng-container(*ngIf="field.fullControlTpl")
+        ng-container(*ngTemplateOutlet="field.fullControlTpl; context: { $implicit: group, name: name, control: control, field: field, addition: addition, validate: updateControlValidity.bind(this, control, field) }")
   ng-container(*ngIf="field.template")
     ng-container(*ngTemplateOutlet="field.template; context: { $implicit: group, name: name, control: control, field: field, addition: addition, validate: updateControlValidity.bind(this, control, field) }")
