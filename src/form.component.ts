@@ -138,10 +138,7 @@ export class NzxFormComponent implements OnInit {
         this.initForm((states[x] as FormStateGroup).state, fields[x] as Dictionary<FormField>, path + '.');
         return;
       }
-      control.valueChanges.subscribe(() => {
-        field.errors = null;
-        this.updateControlValidity(control, field);
-      });
+      control.valueChanges.subscribe(() => this.updateControlValidity(control, field));
       field.control = control;
       const addition: SelectAddition = state.addition || { };
       if (addition.dataFrom) {
@@ -219,9 +216,7 @@ export class NzxFormComponent implements OnInit {
 
   updateControlValidity(control: AbstractControl, field: FormField): void {
     control.setErrors(control.errors);
-    if (control.errors) {
-      field.errors = Object.keys(control.errors);
-    }
+    field.errors = control.errors ? Object.keys(control.errors) : null;
     control.markAsTouched();
   }
 
@@ -239,5 +234,10 @@ export class NzxFormComponent implements OnInit {
         break;
     }
     return dict;
+  }
+
+  getErrorText(name: string, field: FormField, control: AbstractControl): string {
+    const error = field.errorText[name];
+    return error instanceof Function ? error(control.errors[name]) : error;
   }
 }
