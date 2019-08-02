@@ -236,6 +236,10 @@ export class NzxFormComponent implements OnInit {
     return dict;
   }
 
+  getErrorClass(className: string, error: boolean): string {
+    return !error ? className : !className ? 'has-error' : `${ className } has-error`;
+  }
+
   getErrorText(name: string, field: FormField, control: AbstractControl): string {
     const error = field.errorText[name];
     return error instanceof Function ? error(control.errors[name]) : error;
