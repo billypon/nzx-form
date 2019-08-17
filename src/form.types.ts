@@ -14,6 +14,7 @@ export interface FormState {
   updateOn?: 'change' | 'blur' | 'submit';
   addition?: FormStateAddition;
   disabled?: boolean;
+  hidden?: boolean | (() => boolean);
   helpText?: string;
   errorText?: Dictionary<string | ((state: object) => string)>;
   template?: TemplateRef<void>;
@@ -35,6 +36,7 @@ export interface FormField {
   subtype: string;
   addition: FormStateAddition;
   required: boolean;
+  hidden: () => boolean;
   helpText: string;
   errorText: Dictionary<string | ((state: object) => string)>;
   template: TemplateRef<void>;
