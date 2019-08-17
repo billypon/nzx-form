@@ -14,7 +14,7 @@ export function requiredBy(path: Array<string | number> | string, fn?: (value: a
       field = control.root.get(path);
       if (field) {
         field.valueChanges.subscribe(() => {
-          control.updateValueAndValidity({ onlySelf: true });
+          control.updateValueAndValidity({ onlySelf: true, emitEvent: false });
         });
       }
     }
