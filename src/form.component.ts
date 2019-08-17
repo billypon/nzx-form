@@ -216,12 +216,17 @@ export class NzxFormComponent implements OnInit {
       if (control instanceof FormGroup) {
         this.updateGroupValidity(control, fields[x] as Dictionary<FormField>);
       } else {
-        this.updateControlValidity(control, fields[x] as FormField);
+        this.updateControlValidity(control, fields[x] as FormField, true);
       }
     });
   }
 
-  updateControlValidity(control: AbstractControl, field: FormField): void {
+  updateControlValidity(control: AbstractControl, field: FormField, checkHidden = false): void {
+    if (checkHidden && field.hidden()) {
+      control.setErrors(null);
+      field.errors = null;
+      return;
+    }
     control.setErrors(control.errors);
     field.errors = control.errors ? Object.keys(control.errors) : null;
     control.markAsTouched();
