@@ -19,6 +19,7 @@
     ]
   },
   "files": [
-    "tmp/nzx-form.ts"
+    "tmp/nzx-form.ts",
+    "tmp/validators.ts"
   ]
 }
