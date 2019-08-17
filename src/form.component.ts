@@ -34,6 +34,7 @@ export class NzxFormComponent implements OnInit {
       const { group, field } = this.buildForm(value);
       this.formGroup = this.fb.group(group);
       this.formGroupChange.emit(this.formGroup);
+      this.formValueChange.emit(this.formGroup.value);
       this.formGroup.valueChanges.subscribe(x => this.formValueChange.emit(x));
       this.formField = field;
       this.initForm(value, field);
