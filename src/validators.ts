@@ -13,17 +13,17 @@ export function requiredBy(path: Array<string | number> | string, fn?: (value: a
     if (!field) {
       field = control.root.get(path);
       if (field) {
-        field.valueChanges.subscribe(value => {
-          if (fn && fn(value)) {
-            control.updateValueAndValidity({ onlySelf: true });
-          } else if (value) {
-            control.updateValueAndValidity({ onlySelf: true });
-          }
+        field.valueChanges.subscribe(() => {
+          control.updateValueAndValidity({ onlySelf: true });
         });
       }
     }
-    if (field && control.value) {
-      return { required: true };
+    if (field) {
+      if (fn && fn(field.value)) {
+        return { required: true };
+      } else if (field.value) {
+        return { required: true };
+      }
     }
     return null;
   };
@@ -38,9 +38,7 @@ export function equalWith(path: Array<string | number> | string): ValidatorFn {
       field = control.root.get(path);
       if (field) {
         field.valueChanges.subscribe(value => {
-          if (control.value === value) {
-            control.updateValueAndValidity({ onlySelf: true });
-          }
+          control.updateValueAndValidity({ onlySelf: true });
         });
       }
     }
