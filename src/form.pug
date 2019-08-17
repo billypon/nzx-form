@@ -1,2 +1,2 @@
-nzx-form([state]="form.state || form.stateGroup", (groupChange)="form.group = $event", (submitChange)="form.submit = $event", (onSubmit)="form.value = $event; submit($event)", [loading]="form.loading", [layout]="form.layout", [ngClass]="form.class")
+nzx-form([state]="form.state || form.stateGroup", (groupChange)="form.group = $event", (valueChange)="form.value = $event", (submitChange)="form.submit = $event", (onSubmit)="submit($event)", [loading]="form.loading", [layout]="form.layout", [ngClass]="form.class")
   button([hidden]="true")
