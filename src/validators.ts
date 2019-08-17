@@ -19,8 +19,10 @@ export function requiredBy(path: Array<string | number> | string, fn?: (value: a
       }
     }
     if (field) {
-      if (fn && fn(field.value)) {
-        return { required: true };
+      if (fn) {
+        if (fn(field.value)) {
+          return { required: true };
+        }
       } else if (field.value) {
         return { required: true };
       }
