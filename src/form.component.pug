@@ -11,7 +11,7 @@ ng-template(#formTpl let-group="group" let-field="field")
       ng-container(*ngTemplateOutlet="formTpl; context: { group: group.controls[name], field: field[name] }")
 
 ng-template(#itemTpl let-name="name" let-group="group" let-control="control" let-field="field" let-addition="addition")
-  nz-form-item([formGroup]="group", [ngClass]="getErrorClass(field.addition.class.item, hasError(control))", *ngIf="!field.template && field.type != 'hidden' && !field.hidden()")
+  nz-form-item([formGroup]="group", [ngClass]="getClassName(field.addition.class.item, hasError(control))", *ngIf="!field.template && field.type != 'hidden' && !field.hidden()")
     nz-form-label([nzRequired]="field.required", [ngClass]="field.addition.class.label", *ngIf="field.addition.label") {{ field.label }}
     nz-form-control([ngClass]="field.addition.class.control")
       ng-container([ngSwitch]="field.type", *ngIf="!field.controlTpl && !field.fullControlTpl")

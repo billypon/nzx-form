@@ -248,7 +248,7 @@ export class NzxFormComponent implements OnInit {
     return dict;
   }
 
-  getErrorClass(className: string, error: boolean): string {
+  getClassName(className: string, error: boolean): string {
     return !error ? className : !className ? 'has-error' : `${ className } has-error`;
   }
 
