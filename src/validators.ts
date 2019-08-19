@@ -18,7 +18,7 @@ export function requiredBy(path: Array<string | number> | string, fn?: (value: a
         });
       }
     }
-    if (field) {
+    if (field && !control.value) {
       if (fn) {
         if (fn(field.value)) {
           return { required: true };
