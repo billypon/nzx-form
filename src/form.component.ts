@@ -100,13 +100,14 @@ export class NzxFormComponent implements OnInit {
         disabled,
         hidden,
         helpText,
-        errorText,
+        errorText = { },
         template,
         controlTpl,
       } = states[name] as FormState;
       addition.label = addition.label !== undefined ? addition.label : true;
       addition.class = addition.class || { };
       [ 'item', 'label', 'control' ].forEach(x => addition.class[x] = addition.class[x] || '');
+      Object.keys(errorText).forEach(x => errorText[x] = errorText[x] instanceof Function ? errorText[x] as any : () => errorText[x]);
       group[name] = [ { value, disabled }, { validators, asyncValidators, updateOn } ];
       field[name] = {
         label: type === 'checkbox' && subtype !== 'group' ? '' : label,
@@ -117,7 +118,7 @@ export class NzxFormComponent implements OnInit {
         hidden: hidden instanceof Function ? hidden : () => hidden,
         addition,
         helpText,
-        errorText: errorText || { },
+        errorText,
         template,
         controlTpl,
       } as FormField;

@@ -38,7 +38,7 @@ export interface FormField {
   required: boolean;
   hidden: () => boolean;
   helpText: string;
-  errorText: Dictionary<string | ((state: object) => string)>;
+  errorText: Dictionary<(state: object) => string>;
   template: TemplateRef<void>;
   controlTpl: TemplateRef<void>;
   control: AbstractControl;
