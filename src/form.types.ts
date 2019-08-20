@@ -15,7 +15,7 @@ export interface FormState {
   addition?: FormStateAddition;
   disabled?: boolean;
   hidden?: boolean | (() => boolean);
-  helpText?: string;
+  helpText?: string | (() => string);
   errorText?: Dictionary<string | ((state: object) => string)>;
   template?: TemplateRef<void>;
   controlTpl?: TemplateRef<void>;
@@ -37,7 +37,7 @@ export interface FormField {
   addition: FormStateAddition;
   required: boolean;
   hidden: () => boolean;
-  helpText: string;
+  helpText: () => string;
   errorText: Dictionary<(state: object) => string>;
   template: TemplateRef<void>;
   controlTpl: TemplateRef<void>;

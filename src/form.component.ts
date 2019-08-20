@@ -117,7 +117,7 @@ export class NzxFormComponent implements OnInit {
         required: ((validators || [ ]) as any).some(x => x === Validators.required || x['_required']),
         hidden: hidden instanceof Function ? hidden : () => hidden,
         addition,
-        helpText,
+        helpText: helpText instanceof Function ? helpText : () => helpText,
         errorText,
         template,
         controlTpl,
