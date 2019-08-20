@@ -75,11 +75,11 @@ export class NzxFormComponent implements OnInit {
     this.formSubmitChange.emit(this.submitForm.bind(this));
   }
 
-  protected buildForm(state: FormStateDictionary): { group: Dictionary; field: FormFieldDictionary } {
+  protected buildForm(states: FormStateDictionary): { group: Dictionary; field: FormFieldDictionary } {
     const group: Dictionary = { };
     const field: FormFieldDictionary = { };
-    Object.keys(state).forEach(name => {
-      const groupState = state[name] as FormStateGroup;
+    Object.keys(states).forEach(name => {
+      const groupState = states[name] as FormStateGroup;
       if (groupState.state) {
         this.groupLabel[name] = groupState.label;
         const x = this.buildForm(groupState.state);
@@ -103,7 +103,7 @@ export class NzxFormComponent implements OnInit {
         errorText,
         template,
         controlTpl,
-      } = state[name] as FormState;
+      } = states[name] as FormState;
       addition.label = addition.label !== undefined ? addition.label : true;
       addition.class = addition.class || { };
       [ 'item', 'label', 'control' ].forEach(x => addition.class[x] = addition.class[x] || '');
