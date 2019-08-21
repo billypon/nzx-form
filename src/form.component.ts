@@ -117,7 +117,7 @@ export class NzxFormComponent implements OnInit {
         required: ((validators || [ ]) as any).some(x => x === Validators.required || x['_required']),
         hidden: hidden instanceof Function ? hidden : () => hidden,
         addition,
-        helpText: helpText instanceof Function ? helpText : () => helpText,
+        helpText: !helpText ? null : helpText instanceof Function ? helpText : () => helpText,
         errorText,
         template,
         controlTpl,
@@ -251,10 +251,5 @@ export class NzxFormComponent implements OnInit {
 
   getClassName(className: string, error: boolean): string {
     return !error ? className : !className ? 'has-error' : `${ className } has-error`;
-  }
-
-  getErrorText(name: string, field: FormField, control: AbstractControl): string {
-    const error = field.errorText[name];
-    return error instanceof Function ? error(control.errors[name]) : error;
   }
 }
