@@ -27,7 +27,7 @@ ng-template(#itemTpl let-name="name" let-group="group" let-control="control" let
           label(nz-checkbox, [formControlName]="name", [ngClass]="getSizeClass(addition)", *ngIf="field.subtype != 'group'") {{ field.placeholder }}
           nz-checkbox-group([formControlName]="name", [ngClass]="getSizeClass(addition)", *ngIf="field.subtype == 'group'")
         ng-container(*ngSwitchCase="'radio'")
-          nz-radio-group([formControlName]="name")
+          nz-radio-group([formControlName]="name", [nzSize]="addition.size || controlSize")
             ng-container(*ngFor="let option of addition.data")
               label(nz-radio-button, [nzValue]="option.value || option.id", *ngIf="field.subtype == 'button'") {{ option.label || option.name }}
               label(nz-radio, [nzValue]="option.value || option.id", *ngIf="field.subtype != 'button'") {{ option.label || option.name }}
