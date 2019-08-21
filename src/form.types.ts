@@ -20,8 +20,8 @@ export interface FormState {
   template?: TemplateRef<void>;
   fullControlTpl?: TemplateRef<void>;
   controlTpl?: TemplateRef<void>;
-  controlExtraTpl?: TemplateRef<void>;
-  controlExplainTpl?: TemplateRef<void>;
+  helpTpl?: TemplateRef<void>;
+  errorTpl?: TemplateRef<void>;
 }
 
 export interface FormStateGroup {
@@ -44,8 +44,8 @@ export interface FormField {
   template: TemplateRef<void>;
   fullControlTpl?: TemplateRef<void>;
   controlTpl: TemplateRef<void>;
-  controlExtraTpl?: TemplateRef<void>;
-  controlExplainTpl?: TemplateRef<void>;
+  helpTpl?: TemplateRef<void>;
+  errorTpl?: TemplateRef<void>;
   control: AbstractControl;
   errors?: string[];
 }

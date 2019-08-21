@@ -104,8 +104,8 @@ export class NzxFormComponent implements OnInit {
         template,
         fullControlTpl,
         controlTpl,
-        controlExtraTpl,
-        controlExplainTpl,
+        helpTpl,
+        errorTpl,
       } = states[name] as FormState;
       addition.label = addition.label !== undefined ? addition.label : true;
       addition.class = addition.class || { };
@@ -128,8 +128,8 @@ export class NzxFormComponent implements OnInit {
         template,
         fullControlTpl,
         controlTpl,
-        controlExtraTpl,
-        controlExplainTpl,
+        helpTpl,
+        errorTpl,
       } as FormField;
     });
     return { group, field };
