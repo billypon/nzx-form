@@ -42,8 +42,14 @@ ng-template(#itemTpl let-name="name" let-group="group" let-control="control" let
       ng-container(*ngIf="field.controlTpl")
         ng-container(*ngTemplateOutlet="field.controlTpl; context: { $implicit: group, name: name, control: control, field: field, addition: addition, validate: updateControlValidity.bind(this, control, field) }")
       ng-container(*ngIf="!field.fullControlTpl")
-        nz-form-extra(*ngIf="field.helpText && (!field.errors || !field.errorText[field.errors[0]])") {{ field.helpText() }}
-        nz-form-explain(*ngIf="field.errors && field.errorText[field.errors[0]]") {{ field.errorText[field.errors[0]](control.errors[name]) }}
+        ng-container(*ngIf="field.helpText && (!field.errors || !field.errorText[field.errors[0]])")
+          nz-form-extra(*ngIf="!field.controlExtraTpl") {{ field.helpText() }}
+          ng-container(*ngIf="field.controlExtraTpl")
+            ng-container(*ngTemplateOutlet="field.controlExtraTpl; context: { $implicit: helpText(), control: control, field: field, addition: addition }")
+        ng-container(*ngIf="field.errors && field.errorText[field.errors[0]]")
+          nz-form-explain(*ngIf="!field.controlExplainTpl") {{ field.errorText[field.errors[0]](control.errors[name]) }}
+          ng-container(*ngIf="field.controlExplainTpl")
+            ng-container(*ngTemplateOutlet="field.controlExplainTpl; context: { $implicit: field.errorText[field.errors[0]](control.errors[name]), control: control, field: field, addition: addition }")
       ng-container(*ngIf="field.fullControlTpl")
         ng-container(*ngTemplateOutlet="field.fullControlTpl; context: { $implicit: group, name: name, control: control, field: field, addition: addition, validate: updateControlValidity.bind(this, control, field) }")
   ng-container(*ngIf="field.template")

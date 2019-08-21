@@ -18,8 +18,10 @@ export interface FormState {
   helpText?: string | (() => string);
   errorText?: Dictionary<string | ((state: object) => string)>;
   template?: TemplateRef<void>;
-  controlTpl?: TemplateRef<void>;
   fullControlTpl?: TemplateRef<void>;
+  controlTpl?: TemplateRef<void>;
+  controlExtraTpl?: TemplateRef<void>;
+  controlExplainTpl?: TemplateRef<void>;
 }
 
 export interface FormStateGroup {
@@ -40,7 +42,10 @@ export interface FormField {
   helpText: () => string;
   errorText: Dictionary<(state: object) => string>;
   template: TemplateRef<void>;
+  fullControlTpl?: TemplateRef<void>;
   controlTpl: TemplateRef<void>;
+  controlExtraTpl?: TemplateRef<void>;
+  controlExplainTpl?: TemplateRef<void>;
   control: AbstractControl;
   errors?: string[];
 }

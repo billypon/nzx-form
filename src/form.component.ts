@@ -102,7 +102,10 @@ export class NzxFormComponent implements OnInit {
         helpText,
         errorText = { },
         template,
+        fullControlTpl,
         controlTpl,
+        controlExtraTpl,
+        controlExplainTpl,
       } = states[name] as FormState;
       addition.label = addition.label !== undefined ? addition.label : true;
       addition.class = addition.class || { };
@@ -123,7 +126,10 @@ export class NzxFormComponent implements OnInit {
         helpText: !helpText ? null : helpText instanceof Function ? helpText : () => helpText,
         errorText,
         template,
+        fullControlTpl,
         controlTpl,
+        controlExtraTpl,
+        controlExplainTpl,
       } as FormField;
     });
     return { group, field };
