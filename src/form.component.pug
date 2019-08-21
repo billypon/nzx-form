@@ -42,10 +42,10 @@ ng-template(#itemTpl let-name="name" let-group="group" let-control="control" let
       ng-container(*ngIf="field.controlTpl")
         ng-container(*ngTemplateOutlet="field.controlTpl; context: { $implicit: group, name: name, control: control, field: field, addition: addition, validate: updateControlValidity.bind(this, control, field) }")
       ng-container(*ngIf="!field.fullControlTpl")
-        ng-container(*ngIf="field.helpText && (!field.errors || !field.errorText[field.errors[0]])")
-          nz-form-extra(*ngIf="!field.helpTpl") {{ field.helpText() }}
+        ng-container(*ngIf="!field.errors || !field.errorText[field.errors[0]]")
+          nz-form-extra(*ngIf="field.helpText && !field.helpTpl") {{ field.helpText() }}
           ng-container(*ngIf="field.helpTpl")
-            ng-container(*ngTemplateOutlet="field.helpTpl; context: { $implicit: helpText(), control: control, field: field, addition: addition }")
+            ng-container(*ngTemplateOutlet="field.helpTpl; context: { $implicit: field.helpText ? field.helpText() : null, control: control, field: field, addition: addition }")
         ng-container(*ngIf="field.errors && field.errorText[field.errors[0]]")
           nz-form-explain(*ngIf="!field.errorTpl") {{ field.errorText[field.errors[0]](control.errors[name]) }}
           ng-container(*ngIf="field.errorTpl")
